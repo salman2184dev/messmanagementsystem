@@ -1,0 +1,90 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/DataTables/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css" />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+    <link href="~/Content/tableexport.min.css" rel="stylesheet" />
+
+</head>
+<body style="font-family: Verdana">
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Member", "Index", "Member", null, new { @class = "navbar-brand" })
+                @Html.ActionLink("Bazaar", "Index", "Bazaar", null, new { @class = "navbar-brand" })
+                @Html.ActionLink("Meal Per Day", "Index", "TotalMealPerDay", null, new { @class = "navbar-brand" })
+                @Html.ActionLink("Final Report", "Index", "Report", null, new { @class = "navbar-brand" })
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>Mess Management System</p>
+        </footer>
+    </div>
+    <div class="loaderbody" id="loaderbody">
+        <div class="loader"></div>
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
+    <script src="~/Scripts/DataTables/jquery.dataTables.min.js"></script>
+    
+<script src="~/Scripts/FileSaver.js"></script>
+<script src="~/Scripts/tableexport.min.js"></script>
+    <script src="~/Scripts/xlsx.core.js"></script>
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/MyScripts/CrudScript.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".datepicker").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                yearRange: '1950:2100',
+                dateFormat: 'dd-M-yy'
+            });
+
+            $(".monthpicker").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                yearRange: '1950:2100',
+                dateFormat: 'M yy',
+                onClose: function (dateText, inst) {
+                    $(this).datepicker('setDate', new Date(inst.selectedYear, inst.selectedMonth, 1));
+                }
+            });
+
+        });
+
+        function DateTimePicker() {
+            $(".datepicker").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                yearRange: '1950:2100',
+                dateFormat: 'dd-M-yy'
+            });
+        }
+
+    </script>
+    @RenderSection("scripts", required: false)
+
+
+</body>
+</html>

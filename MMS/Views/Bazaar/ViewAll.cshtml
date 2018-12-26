@@ -1,0 +1,63 @@
+﻿@model IEnumerable<MMS.Models.SetupModels.Bazaar>
+@{
+    ViewBag.Title = "ViewAll";
+    Layout = null;
+    int rowNo = 0;
+}
+<style>
+    th {
+        text-align: center
+    }
+</style>
+<table class="table table-striped table-condensed table-bordered" id="bazaarTable"  style="text-align: center">
+    <thead>
+    <tr>
+        <th>
+            SL
+        </th>
+        <th>
+            MemberName
+        </th>
+        <th>
+            Bazaar Date
+        </th>
+        <th>
+           Amount
+        </th>
+        <th>
+            Is Active
+        </th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    @if (Model.Any())
+    {
+        foreach (var item in Model)
+        {
+            <tr>
+                <td align="center" width="5%">
+                    @(rowNo += 1)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem=>item.Member.MemberName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BazaarDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem=>item.Amount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsActive)
+                </td>
+                <td>
+                    <a class="btn btn-primary btn-sm" onclick="Edit('@Url.Action("AddOrEdit", "Bazaar", new {id = @item.BazaarId})')"><i class="fa fa-pencil fa-lg"></i></a>
+                    <a class="btn btn-danger btn-sm" onclick="Delete('@Url.Action("Delete", "Bazaar", new {id = @item.BazaarId})')"><i class="fa fa-trash fa-lg"></i></a>
+                </td>
+            </tr>
+        }
+    }
+    
+    </tbody>
+</table>

@@ -1,0 +1,111 @@
+﻿@model IEnumerable<MMS.Models.ViewModels.ReportModel>
+@{
+    ViewBag.Title = "Index";
+}
+@{
+    var totalMeals = @Model.Sum(a => a.TotalMeals);
+    var totalBazaar = @Model.Sum(a => a.TotalBazaar);
+    var mealRate = 0.00;
+   
+}
+@{
+    if(totalMeals>0)
+    {
+        if (totalBazaar != null)
+        {
+            mealRate = (double) (totalBazaar / totalMeals);
+        }
+    }
+}
+
+<h2>Index</h2>
+<style>
+    td {
+        text-align: center;
+        
+    }
+    table {
+        empty-cells: show
+    }
+    th {
+        text-align: center;
+        color: blue
+    }
+</style>
+
+@using (Html.BeginForm("Index", "Report", FormMethod.Get))
+{
+    <div class="form-group">
+        <label class="control-label col-md-1">From</label>
+        <div class="col-md-3"><input type="text" name="fromDate" class="form-control datepicker" /></div>
+        <label class="control-label col-md-1">To</label>
+        <div class="col-md-3"><input type="text" name="toDate" class="form-control datepicker" /></div>
+        <div class="col-md-4">
+            <input type="submit" value="Search" class="btn btn-primary btn-block" />
+        </div>
+        
+    </div>
+    <br/>
+    <hr/>
+}
+
+    <table class="table table-responsive table-bordered table-striped" id="reportTable">
+        <thead>
+            
+        <tr><th colspan="5">
+    @if (Session["FromDate"] != null || Session["ToDate"] != null)
+    {
+        <text>From - @Session["FromDate"].ToString() To - @Session["ToDate"].ToString()</text>
+    }
+</th></tr>
+            <tr>
+                <th>Member Name</th>
+                <th>Total Meals</th>
+                <th>Total Bazaar</th>
+                <th>Total Eaten</th>
+                <th>Payable</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.MemberName)</td>
+                    <td style="font-weight: bold">@Html.DisplayFor(modelItem => item.TotalMeals)</td>
+                    <td style="font-weight: bold">@Html.DisplayFor(modelItem => item.TotalBazaar)</td>
+                    @{
+                        var totalEaten = item.TotalMeals * mealRate;
+                        var payable = (totalEaten) - (double) item.TotalBazaar;
+                    }
+                    <td style="font-weight: bold">@String.Format("{0:0.00}", totalEaten)</td>
+                    @if (payable < 0)
+                    {
+                        <td style="color: green; font-weight: bold">@String.Format("{0:0.00}", payable)</td>
+                    }
+                    else
+                    {
+                        <td style="color: red; font-weight: bold">@String.Format("{0:0.00}", payable)</td>
+                    }
+                </tr>
+            }
+            <tr>
+                <td style="border-left: 1px solid white"></td>
+                <td>@totalMeals</td>
+                <td>@totalBazaar</td>
+            </tr>
+            <tr>
+                <td colspan="5" style="text-align: center">Meal Rate : @mealRate</td>
+            </tr>
+        </tbody>
+
+    </table>
+
+@section scripts
+{
+    <script>
+        $('#reportTable').tableExport({
+            bootstrap: true
+        })
+    </script>
+}

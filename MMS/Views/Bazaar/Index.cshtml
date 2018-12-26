@@ -1,0 +1,41 @@
+﻿@using System.Web.Optimization
+
+@{
+    ViewBag.Title = "Index";
+
+}
+
+@*<ul class="nav nav-tabs" style="margin-bottom: 10px;">
+        <li class="nav-item active"><a class="nav-link" data-toggle="tab" href="#firstTab">View All</a></li>
+        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#secondTab">Add New</a></li>
+    </ul>
+    <div class="tab-content">
+        <div id="firstTab" class="tab-pane fade in active">@Html.Action("ViewAll")</div>
+        <div id="secondTab" class="tab-pane fade in">@Html.Action("AddOrEdit")</div>
+    </div>*@
+
+<ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#firstTab">View All</a></li>
+    <li class=""><a data-toggle="tab" href="#secondTab">Add New</a></li>
+</ul>
+<div class="tab-content">
+    <div id="firstTab" class="tab-pane fade in active">@Html.Action("ViewAll")</div>
+    <div id="secondTab" class="tab-pane fade in">@Html.Action("AddOrEdit")</div>
+</div>
+
+
+@section Scripts{
+    <script>
+        function activatejQueryTable() {
+            $("#bazaarTable").DataTable({
+                autoWidth: false,
+                responsive: true
+            });
+        }
+
+        $(function () {
+            activatejQueryTable();
+        });
+
+    </script>
+}

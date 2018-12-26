@@ -1,0 +1,3 @@
+﻿1. Create a database in your SQL SERVER. Name it whatever you like. Change the connectionstring in the web config according to your database and server name.
+2. Enable migration in the project by using the command "Enable-Migrations -ContextTypeName MMS.Models.MMSContext" in package manager console.
+3. Then "add-migration initial-create" and "update-database".
